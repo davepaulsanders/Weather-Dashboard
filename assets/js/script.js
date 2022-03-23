@@ -47,7 +47,6 @@ function getWeather(lat, lon) {
   ).then((res) =>
     res.json().then((data) => {
       const today = data.current;
-      console.log(today);
       console.log(
         today.temp,
         today.humidity,
