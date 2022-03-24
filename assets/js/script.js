@@ -46,8 +46,8 @@ function getWeather(lat, lon, name) {
     `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly&appid=${apiKey}&units=imperial`
   ).then((res) =>
     res.json().then((data) => {
-      console.log(data);
       setTodayWeather(data, name);
+      setWeekWeather(data);
     })
   );
 }
@@ -78,7 +78,26 @@ function setTodayWeather(data, name) {
   todayHumidity.text(`Humidity: ${today.humidity}%`);
   todayUV.text(`UV Index: ${today.uvi}`);
 }
-
+function setWeekWeather(data) {
+  const weekWeather = data.daily;
+  weekWeather.shift();
+  weekWeather.splice(5, 2);
+  console.log(weekWeather);
+  const weekContainer = $(".week-container");
+  for (day of weekWeather) {
+    let timeStamp = day.dt;
+    let myDateTime = luxon.DateTime.fromSeconds(timeStamp);
+    myDateTime = myDateTime.toLocaleString();
+    const card = `<div class="flex flex-col rounded bg-slate-700 text-white shadow-md  w-100 md:w-[10rem] p-4 my-3 md:m-3">
+                    <h3>${myDateTime}</h3>
+                    <img class="w-[4rem]" src="http://openweathermap.org/img/w/${day.weather[0].icon}.png" alt="${day.weather[0].description}">
+                    <p class="my-1">Temp: ${day.temp.day}</p>
+                    <p class="my-1">Wind: ${day.wind_speed} MPH</p>
+                    <p class="">Humidity: ${day.humidity}%</p>
+                </div>`;
+    weekContainer.append(card);
+  }
+}
 function latLon(city) {
   const queryCity = city;
   fetch(
