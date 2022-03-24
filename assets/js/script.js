@@ -35,7 +35,7 @@ function setHistory() {
   }
   cityStorage.forEach((item) => {
     const city = $(
-      `<button class="city bg-green-500 hover:bg-blue-700 text-white font-bold py-1 my-1 px-4 border border-blue-700 rounded-md">${item}</button>`
+      `<button class="city-history bg-green-500 hover:bg-blue-700 text-white font-bold py-1 my-1 px-4 border border-blue-700 rounded-md">${item}</button>`
     );
     historyContainer.append(city);
   });
@@ -79,16 +79,17 @@ function setTodayWeather(data, name) {
   todayUV.text(`UV Index: ${today.uvi}`);
 }
 function setWeekWeather(data) {
+  const weekContainer = $(".week-container");
+  weekContainer.empty();
   const weekWeather = data.daily;
   weekWeather.shift();
   weekWeather.splice(5, 2);
-  console.log(weekWeather);
-  const weekContainer = $(".week-container");
+
   for (day of weekWeather) {
     let timeStamp = day.dt;
     let myDateTime = luxon.DateTime.fromSeconds(timeStamp);
     myDateTime = myDateTime.toLocaleString();
-    const card = `<div class="flex flex-col rounded bg-slate-700 text-white shadow-md  w-100 md:w-[10rem] p-4 my-3 md:m-3">
+    const card = `<div class="flex flex-col rounded bg-slate-700 text-white shadow-md w-100 md:min-w-[9rem] p-4 m-1">
                     <h3>${myDateTime}</h3>
                     <img class="w-[4rem]" src="http://openweathermap.org/img/w/${day.weather[0].icon}.png" alt="${day.weather[0].description}">
                     <p class="my-1">Temp: ${day.temp.day}</p>
@@ -109,5 +110,6 @@ function latLon(city) {
   );
 }
 
-$(".search").on("click", localStore);
 setHistory();
+$(".search").on("click", localStore);
+historyContainer.on("click", (event) => latLon(event.target.textContent));
