@@ -3,7 +3,7 @@ const historyContainer = $(".history-container");
 function localStore(event) {
   event.preventDefault();
   const newCity = $(".city").val();
-  latLong(newCity);
+  latLon(newCity);
   if (newCity === "") {
     alert("Choose a city!");
     return;
@@ -41,30 +41,46 @@ function setHistory() {
   });
 }
 
-function getWeather(lat, lon) {
+function getWeather(lat, lon, name) {
   fetch(
     `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly&appid=${apiKey}&units=imperial`
   ).then((res) =>
     res.json().then((data) => {
-      const today = data.current;
-      console.log(
-        today.temp,
-        today.humidity,
-        today.uvi,
-        today.wind_speed,
-        today.weather[0].icon
-      );
+      setTodayWeather(data, name);
     })
   );
 }
+function setTodayWeather(data, name) {
+  const today = data.current;
+  const cityDate = $(".city-date");
+  const weatherIcon = $(".icon");
+  const todayTemp = $(".today-temp");
+  const todayWind = $(".today-wind");
+  const todayHumidity = $(".today-humidity");
+  const todayUV = $(".today-uv");
 
-function latLong(city) {
+  const weatherArr = [cityDate, todayTemp, todayHumidity, todayWind, todayUV];
+  weatherArr.forEach((item) => {
+    item.text("");
+  });
+  cityDate.text(`${name}`);
+  weatherIcon.attr(
+    "src",
+    `http://openweathermap.org/img/w/${today.weather[0].icon}.png`
+  );
+  todayTemp.text(`Temp: ${today.temp}`);
+  todayWind.text(`Wind: ${today.wind_speed} MPH`);
+  todayHumidity.text(`Humidity: ${today.humidity}%`);
+  todayUV.text(`UV Index: ${today.uvi}`);
+}
+
+function latLon(city) {
   const queryCity = city;
   fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${queryCity}&appid=${apiKey}&units=imperial`
   ).then((response) =>
     response.json().then((data) => {
-      getWeather(data.coord.lat, data.coord.lon);
+      getWeather(data.coord.lat, data.coord.lon, data.name);
     })
   );
 }

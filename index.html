@@ -10,8 +10,8 @@
     <header class="bg-sky-800">
         <h1 class="text-center p-5 text-3xl text-white">Weather Dashboard</h1>
     </header>
-    <main class="grid grid-cols-12 md:gap-4 max-w-7xl mx-auto">
-        <section class="search-container flex flex-col col-span-12 md:col-span-4 pb-4 mt-4 mx-3 md:ml-12 border-b-4 border-grey-700 self-start">
+    <main class="grid grid-cols-12md:gap-4 max-w-7xl mx-auto">
+        <section class="search-container overflow-auto flex flex-col max-h-[35rem] col-span-12 row-span-2 md:col-span-4 pb-4 mt-4 mx-3 md:ml-12 border-b-4 border-grey-700 self-start">
             <form class="flex flex-col" name="city-form">
                 <label for="city"></label>
                 <input class="city shadow text-center border border-slate-700 rounded-md mb-3 py-1" type="text" name="city" id="city" placeholder="Choose a city!">
@@ -19,14 +19,15 @@
             </form>
             <div class='history-container flex flex-col'></div>
         </section>
-        <section class="weather-today col-span-12 md:col-span-8 border border-slate-700 rounded-md pl-2 mt-4 m-3">
-            <h2 class="city-date text-2xl font-bold my-3">Atlanta (3/30/2021)</h2>
-            <p class="my-3">Temp: 74.01F</p>
-            <p class="my-3">Wind: 6.67 MPH</p>
-            <p class="my-3">Humidity: 46%</p>
-            <p class="my-3">UV Index: 0.47</p>
+        <section class="weather-today col-span-12 md:col-span-8 self-start border border-slate-700 rounded-md pl-2 mt-4 m-3">
+            <h2 class="city-date text-2xl font-bold my-3">Search to see the weather!</h2>
+            <img class="icon" alt="">
+            <p class="today-temp my-3"></p>
+            <p class="today-wind my-3"></p>
+            <p class="today-humidity my-3"></p>
+            <p class="today-uv my-3"></p>
         </section>
-        <section class="flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap mx-3 rounded-md col-span-12 md:col-start-5 md:col-span-8">
+        <section class="flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap self-start mx-3 rounded-md col-span-12 md:col-start-5 md:col-span-8">
             <div class="rounded shadow-md p-3 my-3 md:m-3">
                 <h3>3/31/2021</h3>
                 <img src="" alt="">
