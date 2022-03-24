@@ -14,8 +14,10 @@ function setHistory() {
     historyContainer.append(city);
   });
 }
-function latLon(event, city) {
-  event.preventDefault();
+function getCoords(event, city) {
+  if (event.target) {
+    event.preventDefault();
+  }
   const queryCity = city;
   if (queryCity === "") {
     alert("Choose a city!");
@@ -32,7 +34,6 @@ function latLon(event, city) {
     )
     .catch((err) => {
       if (err) {
-        console.log(err);
         $(".city").val("");
         alert(`That'\s not an acceptable city!`);
       }
@@ -81,7 +82,6 @@ function setTodayWeather(data, name) {
   let timeStamp = today.dt;
   let myDateTime = luxon.DateTime.fromSeconds(timeStamp);
   myDateTime = myDateTime.toLocaleString();
-
   const cityDate = $(".city-date");
   const weatherIcon = $(".icon");
   const todayTemp = $(".today-temp");
@@ -145,10 +145,14 @@ function setWeekWeather(data) {
 }
 setHistory();
 
+window.onload = (event) => {
+  getCoords(event, "Philadelphia");
+};
+
 $(".search").on("click", function (event) {
   const newCity = $(".city").val();
-  latLon(event, newCity);
+  getCoords(event, newCity);
 });
 historyContainer.on("click", (event) =>
-  latLon(event, event.target.textContent)
+  getCoords(event, event.target.textContent)
 );
