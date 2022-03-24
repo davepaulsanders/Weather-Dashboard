@@ -1,32 +1,27 @@
 const apiKey = key;
 const historyContainer = $(".history-container");
-function localStore(event) {
-  event.preventDefault();
-  const newCity = $(".city").val();
-  latLon(newCity);
-  if (newCity === "") {
-    alert("Choose a city!");
-    return;
-  }
+
+function localStore(city) {
   const cityStorage = JSON.parse(localStorage.getItem("cities"));
 
   if (!cityStorage) {
     const cityArr = [];
-    cityArr.push(newCity);
+    cityArr.push(city);
     localStorage.setItem("cities", JSON.stringify(cityArr));
-    $(".city").val();
+    $(".city").val("");
     setHistory();
   }
-  if (cityStorage.includes(newCity)) {
+  if (cityStorage.includes(city)) {
     $(".city").val("");
     return;
   } else {
-    cityStorage.push(newCity);
+    cityStorage.push(city);
     localStorage.setItem("cities", JSON.stringify(cityStorage));
     $(".city").val("");
     setHistory();
   }
 }
+
 function setHistory() {
   historyContainer.empty();
   const cityStorage = JSON.parse(localStorage.getItem("cities"));
@@ -41,16 +36,6 @@ function setHistory() {
   });
 }
 
-function getWeather(lat, lon, name) {
-  fetch(
-    `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly&appid=${apiKey}&units=imperial`
-  ).then((res) =>
-    res.json().then((data) => {
-      setTodayWeather(data, name);
-      setWeekWeather(data);
-    })
-  );
-}
 function setTodayWeather(data, name) {
   const today = data.current;
   let timeStamp = today.dt;
@@ -99,17 +84,53 @@ function setWeekWeather(data) {
     weekContainer.append(card);
   }
 }
-function latLon(city) {
+function latLon(event, city) {
+  event.preventDefault();
   const queryCity = city;
+  if (queryCity === "") {
+    alert("Choose a city!");
+    return;
+  }
   fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${queryCity}&appid=${apiKey}&units=imperial`
-  ).then((response) =>
-    response.json().then((data) => {
-      getWeather(data.coord.lat, data.coord.lon, data.name);
-    })
-  );
+  )
+    .then((response) =>
+      response.json().then((data) => {
+        getWeather(data.coord.lat, data.coord.lon, data.name);
+        localStore(data.name);
+      })
+    )
+    .catch((err) => {
+      if (err) {
+        console.log(err);
+        $(".city").val("");
+        alert(`That'\s not an acceptable city!`);
+      }
+    });
 }
-
+function getWeather(lat, lon, name) {
+  fetch(
+    `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly&appid=${apiKey}&units=imperial`
+  )
+    .then((res) =>
+      res.json().then((data) => {
+        setTodayWeather(data, name);
+        setWeekWeather(data);
+      })
+    )
+    .catch((err) => {
+      if (err) {
+        console.log(err);
+        alert("Something went wrong, try again!");
+      }
+    });
+}
 setHistory();
-$(".search").on("click", localStore);
-historyContainer.on("click", (event) => latLon(event.target.textContent));
+
+$(".search").on("click", function (event) {
+  const newCity = $(".city").val();
+  latLon(event, newCity);
+});
+historyContainer.on("click", (event) =>
+  latLon(event, event.target.textContent)
+);
