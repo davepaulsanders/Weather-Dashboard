@@ -46,12 +46,17 @@ function getWeather(lat, lon, name) {
     `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly&appid=${apiKey}&units=imperial`
   ).then((res) =>
     res.json().then((data) => {
+      console.log(data);
       setTodayWeather(data, name);
     })
   );
 }
 function setTodayWeather(data, name) {
   const today = data.current;
+  let timeStamp = today.dt;
+  let myDateTime = luxon.DateTime.fromSeconds(timeStamp);
+  myDateTime = myDateTime.toLocaleString();
+
   const cityDate = $(".city-date");
   const weatherIcon = $(".icon");
   const todayTemp = $(".today-temp");
@@ -63,7 +68,7 @@ function setTodayWeather(data, name) {
   weatherArr.forEach((item) => {
     item.text("");
   });
-  cityDate.text(`${name}`);
+  cityDate.text(`${name}\u00A0\u00A0\u00A0\u00A0${myDateTime}`);
   weatherIcon.attr(
     "src",
     `http://openweathermap.org/img/w/${today.weather[0].icon}.png`
