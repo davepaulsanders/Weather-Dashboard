@@ -3,6 +3,7 @@ const historyContainer = $(".history-container");
 function localStore(event) {
   event.preventDefault();
   const newCity = $(".city").val();
+  latLong(newCity);
   if (newCity === "") {
     alert("Choose a city!");
     return;
@@ -39,7 +40,6 @@ function setHistory() {
     historyContainer.append(city);
   });
 }
-$(".search").on("click", localStore);
 
 function getWeather(lat, lon) {
   fetch(
@@ -58,9 +58,10 @@ function getWeather(lat, lon) {
   );
 }
 
-function latLong() {
+function latLong(city) {
+  const queryCity = city;
   fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=London&appid=${apiKey}&units=imperial`
+    `https://api.openweathermap.org/data/2.5/weather?q=${queryCity}&appid=${apiKey}&units=imperial`
   ).then((response) =>
     response.json().then((data) => {
       getWeather(data.coord.lat, data.coord.lon);
@@ -68,5 +69,5 @@ function latLong() {
   );
 }
 
+$(".search").on("click", localStore);
 setHistory();
-latLong();
