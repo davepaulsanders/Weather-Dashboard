@@ -64,15 +64,16 @@ function localStore(city) {
     localStorage.setItem("cities", JSON.stringify(cityArr));
     $(".city").val("");
     setHistory();
-  }
-  if (cityStorage.includes(city)) {
-    $(".city").val("");
-    return;
   } else {
-    cityStorage.push(city);
-    localStorage.setItem("cities", JSON.stringify(cityStorage));
-    $(".city").val("");
-    setHistory();
+    if (cityStorage.includes(city)) {
+      $(".city").val("");
+      return;
+    } else {
+      cityStorage.push(city);
+      localStorage.setItem("cities", JSON.stringify(cityStorage));
+      $(".city").val("");
+      setHistory();
+    }
   }
 }
 function setTodayWeather(data, name) {
@@ -87,8 +88,9 @@ function setTodayWeather(data, name) {
   const todayWind = $(".today-wind");
   const todayHumidity = $(".today-humidity");
   const todayUV = $(".today-uv");
-
+  const uvIndexVar = today.uvi;
   const weatherArr = [cityDate, todayTemp, todayHumidity, todayWind, todayUV];
+
   weatherArr.forEach((item) => {
     item.text("");
   });
@@ -101,7 +103,25 @@ function setTodayWeather(data, name) {
   todayWind.text(`Wind: ${today.wind_speed} MPH`);
   todayHumidity.text(`Humidity: ${today.humidity}%`);
   todayUV.text(`UV Index: ${today.uvi}`);
+
+  if (uvIndexVar <= 2) {
+    todayUV.css("background-color", "green");
+    todayUV.css("color", "white");
+  } else if (uvIndexVar > 2 && uvIndexVar <= 5) {
+    todayUV.css("background-color", "yellow");
+    todayUV.css("color", "black");
+  } else if (uvIndexVar > 5 && uvIndexVar <= 7) {
+    todayUV.css("background-color", "orange");
+    todayUV.css("color", "white");
+  } else if (uvIndexVar > 7 && uvIndexVar <= 10) {
+    todayUV.css("background-color", "red");
+    todayUV.css("color", "white");
+  } else {
+    todayUV.css("background-color", "purple");
+    todayUV.css("color", "");
+  }
 }
+
 function setWeekWeather(data) {
   const weekContainer = $(".week-container");
   weekContainer.empty();
