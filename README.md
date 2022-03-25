@@ -15,3 +15,5 @@ The site is viewable at
 <img src="./assets/img/screenshot.png" style="width: 35rem"/>
 
 ## Installation
+
+To use this project, clone the repository to your computer using HTTPS or SSH, then replace the apiKey variable in line 2 of script.js with your own key from OpenWeather API
