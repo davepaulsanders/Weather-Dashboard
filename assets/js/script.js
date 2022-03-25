@@ -1,5 +1,5 @@
 // Replace apiKey variable with your own key
-const apiKey = key;
+const apiKey = "c3092c2d4eb3d6f6f64456f5fc464ffa";
 const historyContainer = $(".history-container");
 
 // Creates buttons for all cities stored in local storage

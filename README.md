@@ -8,7 +8,9 @@ This project uses Javascript, OpenWeather API, HTML, CSS, Luxon, Tailwind CSS, a
 
 ## Live Link
 
-The site is viewable at
+The site is viewable at:
+
+https://davepaulsanders.github.io/Weather-Dashboard/
 
 ## Screenshots
 
@@ -16,4 +18,4 @@ The site is viewable at
 
 ## Installation
 
-To use this project, clone the repository to your computer using HTTPS or SSH, then replace the apiKey variable in line 2 of script.js with your own key from OpenWeather API
+To use this project, clone the repository to your computer using HTTPS or SSH.
