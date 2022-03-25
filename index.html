@@ -11,7 +11,7 @@
         <h1 class="text-center p-5 text-3xl text-white">Weather Dashboard</h1>
     </header>
     <main class="grid grid-cols-12 md:gap-4 max-w-7xl mx-auto">
-        <section class="search-container flex flex-col col-span-12 md:col-span-4 pb-4 mt-4 mx-3 md:ml-12 border-b-4 border-grey-700 self-start">
+        <section class="search-container overflow-auto flex flex-col max-h-[35rem] col-span-12 row-span-2 md:col-span-4 pb-4 mt-4 mx-3 md:ml-12 border-b-4 border-grey-700 self-start">
             <form class="flex flex-col" name="city-form">
                 <label for="city"></label>
                 <input class="city shadow text-center border border-slate-700 rounded-md mb-3 py-1" type="text" name="city" id="city" placeholder="Choose a city!">
@@ -19,53 +19,24 @@
             </form>
             <div class='history-container flex flex-col'></div>
         </section>
-        <section class="weather-today col-span-12 md:col-span-8 border border-slate-700 rounded-md pl-2 mt-4 m-3">
-            <h2 class="city-date text-2xl font-bold my-3">Atlanta (3/30/2021)</h2>
-            <p class="my-3">Temp: 74.01F</p>
-            <p class="my-3">Wind: 6.67 MPH</p>
-            <p class="my-3">Humidity: 46%</p>
-            <p class="my-3">UV Index: 0.47</p>
+        <section class="weather-today col-span-12 md:col-span-8 self-start border border-slate-700 rounded-md pl-2 mt-4 m-3">
+            <div class="flex align-center">
+                <h2 class="city-date text-2xl font-bold my-4"></h2>
+                <img class="icon w-[4rem] ml-2" src='' alt="">
+            </div>
+            <p class="today-temp my-3"></p>
+            <p class="today-wind my-3"></p>
+            <p class="today-humidity my-3"></p>
+            <p class="today-uv w-32 p-2 rounded-md text-center my-3"></p>
         </section>
-        <section class="flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap mx-3 rounded-md col-span-12 md:col-start-5 md:col-span-8">
-            <div class="rounded shadow-md p-3 my-3 md:m-3">
-                <h3>3/31/2021</h3>
-                <img src="" alt="">
-                <p class="my-3">Temp: 74.01F</p>
-                <p class="my-3">Wind: 6.67 MPH</p>
-                <p class="my-3">Humidity: 46%</p>
-            </div>
-            <div class="rounded shadow-md p-3 my-3 md:m-3">
-                <h3>3/31/2021</h3>
-                <img src="" alt="">
-                <p class="my-3">Temp: 74.01F</p>
-                <p class="my-3">Wind: 6.67 MPH</p>
-                <p class="my-3">Humidity: 46%</p>
-            </div>
-            <div class="rounded shadow-md p-3 my-3 md:m-3">
-                <h3>3/31/2021</h3>
-                <img src="" alt="">
-                <p class="my-3">Temp: 74.01F</p>
-                <p class="my-3">Wind: 6.67 MPH</p>
-                <p class="my-3">Humidity: 46%</p>
-            </div>
-            <div class="rounded shadow-md p-3 my-3 md:m-3">
-                <h3>3/31/2021</h3>
-                <img src="" alt="">
-                <p class="my-3">Temp: 74.01F</p>
-                <p class="my-3">Wind: 6.67 MPH</p>
-                <p class="my-3">Humidity: 46%</p>
-            </div>
-            <div class="rounded shadow-md p-3 my-3 md:m-3">
-                <h3>3/31/2021</h3>
-                <img src="" alt="">
-                <p class="my-3">Temp: 74.01F</p>
-                <p class="my-3">Wind: 6.67 MPH</p>
-                <p class="my-3">Humidity: 46%</p>
-            </div>
+        <section class="week-container flex flex-col md:flex-row md:flex-wrap self-start mx-3 rounded-md col-span-12 md:col-start-5 md:col-span-8">
+            
         </section>
     </main>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/2.3.1/luxon.min.js" integrity="sha512-Nw0Abk+Ywwk5FzYTxtB70/xJRiCI0S2ORbXI3VBlFpKJ44LM6cW2WxIIolyKEOxOuMI90GIfXdlZRJepu7cczA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- api.js is used to hide API key -->
     <script src="./assets/js/api.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
